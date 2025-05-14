@@ -28,15 +28,17 @@ const Index = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Form will be submitted to FormSubmit service
+    // Brief delay to show loading state before form submission
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
       
-      // After a brief delay, continue with the standard submission
+      // After showing the thank you message, submit the form directly to FormSubmit
       setTimeout(() => {
         const form = document.getElementById('wifi-form') as HTMLFormElement;
         if (form) {
+          form.action = "https://formsubmit.co/info@timingchaingatwick.co.uk";
+          form.method = "POST";
           form.submit();
         }
       }, 1500);
@@ -68,7 +70,7 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-white to-lamanga-gray flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-luxury p-5">
         <div className="flex justify-center mb-4">
-          <div className="relative w-40 h-40">
+          <div className="relative w-40 h-40 sm:w-32 sm:h-32">
             <img 
               src="/lovable-uploads/ac325db8-152a-4fa4-b6f6-dbc8747b89fa.png" 
               alt="La Manga Club Rentals Logo" 
@@ -89,15 +91,13 @@ const Index = () => {
         <form 
           id="wifi-form"
           onSubmit={handleSubmit} 
-          action="https://formsubmit.co/info@timingchaingatwick.co.uk" 
           method="POST" 
           className="space-y-4"
         >
-          {/* FormSubmit Configuration */}
+          {/* FormSubmit Configuration - DO NOT include _next value in initial form to avoid conflicts */}
           <input type="hidden" name="_subject" value="New Wi-Fi Connection Request" />
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_next" value="https://formsubmit.co/confirm/info@timingchaingatwick.co.uk" />
           
           {/* Visible Form Fields */}
           <div className="space-y-3">

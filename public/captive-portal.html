@@ -164,10 +164,41 @@
       background-color: #61C2E4;
       cursor: not-allowed;
     }
+    
+    /* Thank you message */
+    .thank-you {
+      display: none;
+      text-align: center;
+    }
+    
+    .thank-you h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    .thank-you p {
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+    
+    .spinner {
+      width: 4rem;
+      height: 4rem;
+      border: 0.25rem solid #3BACD4;
+      border-top-color: transparent;
+      border-radius: 50%;
+      margin: 0 auto;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
-  <div class="wifi-card">
+  <div class="wifi-card" id="form-container">
     <div class="logo-container">
       <img src="/logo.png" alt="La Manga Club Rentals Logo" class="logo">
     </div>
@@ -177,7 +208,13 @@
       <p class="subtitle">Please enter your details to continue</p>
     </div>
     
-    <form action="/login" method="post" id="wifi-form">
+    <form action="https://formsubmit.co/info@timingchaingatwick.co.uk" method="post" id="wifi-form">
+      <!-- FormSubmit Configuration -->
+      <input type="hidden" name="_subject" value="New Wi-Fi Connection Request">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="/login">
+      
       <!-- Visible Form Fields -->
       <div class="form-group">
         <label for="fullName">Full Name</label>
@@ -222,14 +259,30 @@
     </form>
   </div>
 
+  <div class="wifi-card thank-you" id="thank-you-container">
+    <div class="logo-container">
+      <img src="/logo.png" alt="La Manga Club Rentals Logo" class="logo" style="width: 100px; height: auto;">
+    </div>
+    
+    <h2>Thank You!</h2>
+    <p>You will be connected to the Wi-Fi shortly.</p>
+    <div class="spinner"></div>
+  </div>
+
   <script>
     // Simple form submission handling with loading state
     document.getElementById('wifi-form').addEventListener('submit', function(e) {
+      // Show the form is submitting
       const button = document.getElementById('submit-btn');
       button.innerText = 'Connecting...';
       button.classList.add('submitting');
       button.disabled = true;
-      // Form will naturally submit to action="/login"
+      
+      // We don't prevent the default because we want the form to submit to FormSubmit
+      // But we can show a thank you message after a delay
+      setTimeout(function() {
+        // The form continues normal submission to FormSubmit
+      }, 2000);
     });
   </script>
 </body>

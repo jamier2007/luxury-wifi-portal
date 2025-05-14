@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Manga Club Rentals - Wi-Fi Access</title>
+  <style>
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', 'Helvetica', sans-serif;
+    }
+    
+    body {
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #ffffff, #F5F5F5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      color: #333333;
+    }
+    
+    /* Card Container */
+    .wifi-card {
+      width: 100%;
+      max-width: 420px;
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+      padding: 2rem;
+    }
+    
+    /* Logo Styles */
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .logo {
+      width: 200px;
+      height: auto;
+      max-height: 200px;
+    }
+    
+    /* Text Styles */
+    .text-center {
+      text-align: center;
+    }
+    
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    @media (min-width: 640px) {
+      h1 {
+        font-size: 1.75rem;
+      }
+    }
+    
+    .subtitle {
+      color: #666;
+      margin-bottom: 2rem;
+    }
+    
+    /* Form Styles */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    
+    label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #555;
+    }
+    
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ddd;
+      transition: all 0.2s ease;
+    }
+    
+    input[type="text"]:focus,
+    input[type="email"]:focus {
+      outline: none;
+      border-color: transparent;
+      box-shadow: 0 0 0 2px #3BACD4;
+    }
+    
+    input[type="text"]::placeholder,
+    input[type="email"]::placeholder {
+      color: #aaa;
+    }
+    
+    /* Hidden Fields */
+    .visually-hidden {
+      border: 0;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+    
+    /* Button Styles */
+    button {
+      background-color: #3BACD4;
+      color: white;
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      margin-top: 0.5rem;
+    }
+    
+    button:hover {
+      background-color: #2C8AAA;
+    }
+    
+    button:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px white, 0 0 0 4px #3BACD4;
+    }
+    
+    /* Footer Text */
+    .footer-text {
+      font-size: 0.75rem;
+      color: #888;
+      text-align: center;
+      margin-top: 1.5rem;
+      line-height: 1.4;
+    }
+    
+    /* Animations */
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+    
+    .submitting {
+      animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      background-color: #61C2E4;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="wifi-card">
+    <div class="logo-container">
+      <img src="/logo.png" alt="La Manga Club Rentals Logo" class="logo">
+    </div>
+    
+    <div class="text-center">
+      <h1>Connect to La Manga Club Rentals Wi-Fi</h1>
+      <p class="subtitle">Please enter your details to continue</p>
+    </div>
+    
+    <form action="/login" method="post" id="wifi-form">
+      <!-- Visible Form Fields -->
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input 
+          type="text" 
+          id="fullName" 
+          name="fullName" 
+          autocomplete="name" 
+          placeholder="Enter your full name" 
+          required
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          autocomplete="email" 
+          placeholder="Enter your email address" 
+          required
+        >
+      </div>
+      
+      <!-- Hidden Form Fields -->
+      <input type="tel" name="phone" autocomplete="tel" class="visually-hidden">
+      <input type="text" name="address" autocomplete="address-line1" class="visually-hidden">
+      <input type="text" name="postcode" autocomplete="postal-code" class="visually-hidden">
+      
+      <!-- MikroTik Hotspot Integration -->
+      <input type="hidden" name="username" value="guest">
+      <input type="hidden" name="password" value="guest">
+      
+      <!-- Submit Button -->
+      <button type="submit" id="submit-btn">Connect to Wi-Fi</button>
+      
+      <!-- Footer Text -->
+      <p class="footer-text">
+        By connecting, you agree to our Wi-Fi terms. Your email may be used to send exclusive rental offers.
+      </p>
+    </form>
+  </div>
+
+  <script>
+    // Simple form submission handling with loading state
+    document.getElementById('wifi-form').addEventListener('submit', function(e) {
+      const button = document.getElementById('submit-btn');
+      button.innerText = 'Connecting...';
+      button.classList.add('submitting');
+      button.disabled = true;
+      // Form will naturally submit to action="/login"
+    });
+  </script>
+</body>
+</html>

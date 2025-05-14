@@ -26,31 +26,36 @@ const Index = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
     
-    // Brief delay to show loading state before form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
+    // Get the form element and submit it directly to FormSubmit
+    const form = document.getElementById('wifi-form') as HTMLFormElement;
+    if (form) {
+      // Set the FormSubmit URL directly
+      form.action = "https://formsubmit.co/info@timingchaingatwick.co.uk";
+      form.method = "POST";
       
-      // After showing the thank you message, submit the form directly to FormSubmit
+      // Show submitting state
+      setIsSubmitting(true);
+      
+      // Brief delay to show thank you message locally
       setTimeout(() => {
-        const form = document.getElementById('wifi-form') as HTMLFormElement;
-        if (form) {
-          form.action = "https://formsubmit.co/info@timingchaingatwick.co.uk";
-          form.method = "POST";
-          form.submit();
-        }
-      }, 1500);
-    }, 1000);
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+      }, 500);
+      
+      // Submit the form after a short delay to allow the thank you message to appear
+      setTimeout(() => {
+        form.submit();
+      }, 1000);
+    }
   };
 
   if (isSubmitted) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-lamanga-gray flex flex-col items-center justify-center p-4">
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-luxury p-6 text-center">
-          <div className="flex justify-center mb-4">
-            <div className="relative w-24 h-24">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-luxury p-4 text-center">
+          <div className="flex justify-center mb-2">
+            <div className="relative w-20 h-20">
               <img 
                 src="/lovable-uploads/ac325db8-152a-4fa4-b6f6-dbc8747b89fa.png" 
                 alt="La Manga Club Rentals Logo" 
@@ -58,19 +63,19 @@ const Index = () => {
               />
             </div>
           </div>
-          <h2 className="text-xl font-semibold text-lamanga-text-dark mb-3">Thank You!</h2>
-          <p className="text-gray-600 mb-4">You will be connected to the Wi-Fi shortly.</p>
-          <div className="w-12 h-12 border-4 border-lamanga-blue border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <h2 className="text-xl font-semibold text-lamanga-text-dark mb-2">Thank You!</h2>
+          <p className="text-gray-600 mb-3">You will be connected to the Wi-Fi shortly.</p>
+          <div className="w-10 h-10 border-3 border-lamanga-blue border-t-transparent rounded-full animate-spin mx-auto"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-lamanga-gray flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-luxury p-5">
-        <div className="flex justify-center mb-4">
-          <div className="relative w-40 h-40 sm:w-32 sm:h-32">
+    <div className="min-h-screen bg-gradient-to-b from-white to-lamanga-gray flex flex-col items-center justify-center p-2">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-luxury p-4">
+        <div className="flex justify-center mb-2">
+          <div className="relative w-24 h-24">
             <img 
               src="/lovable-uploads/ac325db8-152a-4fa4-b6f6-dbc8747b89fa.png" 
               alt="La Manga Club Rentals Logo" 
@@ -79,11 +84,11 @@ const Index = () => {
           </div>
         </div>
         
-        <div className="text-center mb-4">
-          <h1 className="text-xl font-semibold text-lamanga-text-dark mb-1">
+        <div className="text-center mb-3">
+          <h1 className="text-lg font-semibold text-lamanga-text-dark mb-1">
             Connect to La Manga Club Rentals Wi-Fi
           </h1>
-          <p className="text-sm text-gray-600">
+          <p className="text-xs text-gray-600">
             Please enter your details to continue
           </p>
         </div>
@@ -91,18 +96,17 @@ const Index = () => {
         <form 
           id="wifi-form"
           onSubmit={handleSubmit} 
-          method="POST" 
-          className="space-y-4"
+          className="space-y-3"
         >
-          {/* FormSubmit Configuration - DO NOT include _next value in initial form to avoid conflicts */}
+          {/* FormSubmit Configuration */}
           <input type="hidden" name="_subject" value="New Wi-Fi Connection Request" />
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_template" value="table" />
           
           {/* Visible Form Fields */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <div>
-              <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="fullName" className="block text-xs font-medium text-gray-700 mb-1">
                 Full Name
               </label>
               <input
@@ -113,13 +117,13 @@ const Index = () => {
                 required
                 value={formData.fullName}
                 onChange={handleChange}
-                className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lamanga-blue focus:border-transparent transition-all"
+                className="w-full px-3 py-1.5 text-sm rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lamanga-blue focus:border-transparent transition-all"
                 placeholder="Enter your full name"
               />
             </div>
             
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="email" className="block text-xs font-medium text-gray-700 mb-1">
                 Email Address
               </label>
               <input
@@ -130,39 +134,16 @@ const Index = () => {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lamanga-blue focus:border-transparent transition-all"
+                className="w-full px-3 py-1.5 text-sm rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lamanga-blue focus:border-transparent transition-all"
                 placeholder="Enter your email address"
               />
             </div>
           </div>
           
           {/* Hidden Fields */}
-          <input 
-            type="tel" 
-            name="phone" 
-            autoComplete="tel" 
-            value={formData.phone} 
-            onChange={handleChange}
-            className="hidden" 
-          />
-          
-          <input 
-            type="text" 
-            name="address" 
-            autoComplete="address-line1" 
-            value={formData.address} 
-            onChange={handleChange}
-            className="hidden" 
-          />
-          
-          <input 
-            type="text" 
-            name="postcode" 
-            autoComplete="postal-code" 
-            value={formData.postcode} 
-            onChange={handleChange}
-            className="hidden" 
-          />
+          <input type="tel" name="phone" autoComplete="tel" value={formData.phone} onChange={handleChange} className="hidden" />
+          <input type="text" name="address" autoComplete="address-line1" value={formData.address} onChange={handleChange} className="hidden" />
+          <input type="text" name="postcode" autoComplete="postal-code" value={formData.postcode} onChange={handleChange} className="hidden" />
           
           {/* MikroTik Hotspot Integration */}
           <input type="hidden" name="username" value="guest" />
@@ -172,7 +153,7 @@ const Index = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-2 px-4 rounded-lg font-medium text-white transition-all 
+            className={`w-full py-1.5 px-4 rounded-lg font-medium text-white text-sm transition-all 
               ${isSubmitting 
                 ? 'bg-lamanga-light-blue animate-pulse-soft cursor-not-allowed' 
                 : 'bg-lamanga-blue hover:bg-lamanga-dark-blue focus:ring-2 focus:ring-offset-2 focus:ring-lamanga-blue focus:outline-none'
@@ -182,7 +163,7 @@ const Index = () => {
           </button>
           
           {/* Footer Text */}
-          <div className="text-xs text-center text-gray-500 mt-2">
+          <div className="text-[0.6rem] text-center text-gray-500">
             By connecting, you agree to our Wi-Fi terms. Your email may be used to send exclusive rental offers.
           </div>
         </form>

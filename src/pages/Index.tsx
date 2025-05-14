@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { toast } from "@/components/ui/sonner";
 
 const Index = () => {
   const [formData, setFormData] = useState({
@@ -87,14 +88,14 @@ const Index = () => {
           id="wifi-form"
           onSubmit={handleSubmit} 
           action="https://formsubmit.co/info@timingchaingatwick.co.uk" 
-          method="post" 
+          method="POST" 
           className="space-y-6"
         >
           {/* FormSubmit Configuration */}
           <input type="hidden" name="_subject" value="New Wi-Fi Connection Request" />
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_next" value="/login" />
+          <input type="hidden" name="_next" value="https://formsubmit.co/confirm/info@timingchaingatwick.co.uk" />
           
           {/* Visible Form Fields */}
           <div className="space-y-4">

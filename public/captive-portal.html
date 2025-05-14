@@ -28,24 +28,24 @@
     /* Card Container */
     .wifi-card {
       width: 100%;
-      max-width: 420px;
+      max-width: 380px;
       background-color: white;
       border-radius: 16px;
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
-      padding: 2rem;
+      padding: 1.5rem;
     }
     
     /* Logo Styles */
     .logo-container {
       display: flex;
       justify-content: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
     
     .logo {
-      width: 200px;
+      width: 140px;
       height: auto;
-      max-height: 200px;
+      max-height: 140px;
     }
     
     /* Text Styles */
@@ -54,27 +54,22 @@
     }
     
     h1 {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    
-    @media (min-width: 640px) {
-      h1 {
-        font-size: 1.75rem;
-      }
+      margin-bottom: 0.25rem;
     }
     
     .subtitle {
       color: #666;
-      margin-bottom: 2rem;
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
     }
     
     /* Form Styles */
     form {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1rem;
     }
     
     .form-group {
@@ -92,7 +87,7 @@
     input[type="text"],
     input[type="email"] {
       width: 100%;
-      padding: 0.75rem 1rem;
+      padding: 0.625rem 0.75rem;
       border-radius: 0.5rem;
       border: 1px solid #ddd;
       transition: all 0.2s ease;
@@ -127,12 +122,12 @@
       background-color: #3BACD4;
       color: white;
       font-weight: 500;
-      padding: 0.75rem 1rem;
+      padding: 0.625rem 1rem;
       border-radius: 0.5rem;
       border: none;
       cursor: pointer;
       transition: background-color 0.2s ease;
-      margin-top: 0.5rem;
+      margin-top: 0.25rem;
     }
     
     button:hover {
@@ -146,10 +141,10 @@
     
     /* Footer Text */
     .footer-text {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: #888;
       text-align: center;
-      margin-top: 1.5rem;
+      margin-top: 0.75rem;
       line-height: 1.4;
     }
     
@@ -172,19 +167,20 @@
     }
     
     .thank-you h2 {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 600;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
     
     .thank-you p {
       color: #666;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
     }
     
     .spinner {
-      width: 4rem;
-      height: 4rem;
+      width: 3rem;
+      height: 3rem;
       border: 0.25rem solid #3BACD4;
       border-top-color: transparent;
       border-radius: 50%;
@@ -194,6 +190,22 @@
     
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+
+    /* Adjust spacing for small screens */
+    @media (max-height: 700px) {
+      .logo {
+        width: 120px;
+        max-height: 120px;
+      }
+      
+      .logo-container {
+        margin-bottom: 0.75rem;
+      }
+      
+      form {
+        gap: 0.75rem;
+      }
     }
   </style>
 </head>
@@ -261,7 +273,7 @@
 
   <div class="wifi-card thank-you" id="thank-you-container">
     <div class="logo-container">
-      <img src="/logo.png" alt="La Manga Club Rentals Logo" class="logo" style="width: 100px; height: auto;">
+      <img src="/logo.png" alt="La Manga Club Rentals Logo" class="logo" style="width: 90px; height: auto;">
     </div>
     
     <h2>Thank You!</h2>
@@ -272,17 +284,24 @@
   <script>
     // Simple form submission handling with loading state
     document.getElementById('wifi-form').addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent default to handle submission manually
+      
       // Show the form is submitting
       const button = document.getElementById('submit-btn');
       button.innerText = 'Connecting...';
       button.classList.add('submitting');
       button.disabled = true;
       
-      // We don't prevent the default because we want the form to submit to FormSubmit
-      // But we can show a thank you message after a delay
+      // After a brief delay to show loading state
       setTimeout(function() {
-        // The form continues normal submission to FormSubmit
-      }, 2000);
+        document.getElementById('form-container').style.display = 'none';
+        document.getElementById('thank-you-container').style.display = 'block';
+        
+        // After showing thank you message, submit the form
+        setTimeout(function() {
+          e.target.submit(); // Actually submit the form to FormSubmit
+        }, 1500);
+      }, 1000);
     });
   </script>
 </body>

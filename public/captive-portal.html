@@ -43,9 +43,8 @@
     }
     
     .logo {
-      width: 80px;
+      width: 60px;
       height: auto;
-      max-height: 80px;
     }
     
     /* Text Styles */
@@ -148,68 +147,23 @@
       margin-top: 0.5rem;
       line-height: 1.3;
     }
-    
-    /* Animations */
-    @keyframes pulse-soft {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.8; }
-    }
-    
-    .submitting {
-      animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-      background-color: #61C2E4;
-      cursor: not-allowed;
-    }
-    
-    /* Thank you message */
-    .thank-you {
-      display: none;
-      text-align: center;
-    }
-    
-    .thank-you h2 {
-      font-size: 1.125rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    
-    .thank-you p {
-      color: #666;
-      margin-bottom: 0.75rem;
-      font-size: 0.8125rem;
-    }
-    
-    .spinner {
-      width: 2.5rem;
-      height: 2.5rem;
-      border: 0.25rem solid #3BACD4;
-      border-top-color: transparent;
-      border-radius: 50%;
-      margin: 0 auto;
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
   </style>
 </head>
 <body>
-  <div class="wifi-card" id="form-container">
+  <div class="wifi-card">
     <div class="logo-container">
       <img src="/logo.png" alt="La Manga Club Rentals Logo" class="logo">
     </div>
     
     <div class="text-center">
-      <h1>Connect to La Manga Club Rentals Wi-Fi</h1>
+      <h1>Connect to Wi-Fi</h1>
       <p class="subtitle">Please enter your details to continue</p>
     </div>
     
-    <form id="wifi-form" method="POST" action="https://formsubmit.co/info@timingchaingatwick.co.uk">
+    <form action="https://formsubmit.co/info@timingchaingatwick.co.uk" method="POST">
       <!-- FormSubmit Configuration -->
       <input type="hidden" name="_subject" value="New Wi-Fi Connection Request">
       <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
       
       <!-- Visible Form Fields -->
       <div class="form-group">
@@ -246,7 +200,7 @@
       <input type="hidden" name="password" value="guest">
       
       <!-- Submit Button -->
-      <button type="submit" id="submit-btn">Connect to Wi-Fi</button>
+      <button type="submit">Connect to Wi-Fi</button>
       
       <!-- Footer Text -->
       <p class="footer-text">
@@ -254,33 +208,5 @@
       </p>
     </form>
   </div>
-
-  <div class="wifi-card thank-you" id="thank-you-container">
-    <div class="logo-container">
-      <img src="/logo.png" alt="La Manga Club Rentals Logo" class="logo" style="width: 70px; height: auto;">
-    </div>
-    
-    <h2>Thank You!</h2>
-    <p>You will be connected to the Wi-Fi shortly.</p>
-    <div class="spinner"></div>
-  </div>
-
-  <script>
-    document.getElementById('wifi-form').addEventListener('submit', function(e) {
-      // Do NOT prevent default - let the form submit naturally to FormSubmit
-      
-      // Show loading state
-      document.getElementById('submit-btn').textContent = 'Connecting...';
-      document.getElementById('submit-btn').disabled = true;
-      
-      // We're not preventing the redirect, but we'll show the thank you message briefly
-      setTimeout(function() {
-        document.getElementById('form-container').style.display = 'none';
-        document.getElementById('thank-you-container').style.display = 'block';
-      }, 200);
-      
-      // The form will naturally submit and redirect to FormSubmit
-    });
-  </script>
 </body>
 </html>

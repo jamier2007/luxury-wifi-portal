@@ -3,6 +3,13 @@
  */
 
 /**
+ * Checks if the current device is running iOS
+ */
+export const isIOS = (): boolean => {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+};
+
+/**
  * Extracts browser autofill data from form inputs
  * This helps capture data that might be autofilled by the browser
  * but not properly reflected in React state
@@ -15,13 +22,21 @@ export const extractAutofillData = (form: HTMLFormElement): Record<string, strin
     const name = input.name;
     if (!name) return;
     
-    // Check if this field appears to be autofilled by the browser
-    const isAutofilled = 
-      window.getComputedStyle(input, ":-webkit-autofill").getPropertyValue("background-color") !== "" ||
-      input.value !== "";
-    
-    if (isAutofilled) {
-      data[name] = input.value;
+    // Different detection methods for desktop vs iOS
+    if (isIOS()) {
+      // iOS tends to autofill without the styling changes that desktop browsers add
+      if (input.value !== "") {
+        data[name] = input.value;
+      }
+    } else {
+      // Desktop autofill detection
+      const isAutofilled = 
+        window.getComputedStyle(input, ":-webkit-autofill").getPropertyValue("background-color") !== "" ||
+        input.value !== "";
+      
+      if (isAutofilled) {
+        data[name] = input.value;
+      }
     }
   });
   
@@ -45,6 +60,11 @@ export const submitFormWithHiddenData = async (
     // Add any autofilled data that might not be in the form
     const autofillData = extractAutofillData(form);
     
+    // Log data being captured (for debugging - remove in production)
+    console.log("FormData:", Object.fromEntries(formDataObj));
+    console.log("State data:", formData);
+    console.log("Autofill data:", autofillData);
+    
     // Combine all data sources with priority: autofill > state > form
     const allData = {
       ...Object.fromEntries(formDataObj),
@@ -55,8 +75,16 @@ export const submitFormWithHiddenData = async (
     // Create a new FormData with all the combined data
     const finalFormData = new FormData();
     Object.entries(allData).forEach(([key, value]) => {
-      finalFormData.append(key, value);
+      // Skip empty values for hidden fields (unless they're supposed to be empty)
+      if (value !== "" || key === "username" || key === "password") {
+        finalFormData.append(key, value);
+      }
     });
+    
+    // For iOS devices, ensure we wait a bit longer to collect any potential late autofill
+    if (isIOS()) {
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
     
     // Get form action
     const action = form.getAttribute('action') || '';
@@ -73,6 +101,8 @@ export const submitFormWithHiddenData = async (
     if (onSuccess) onSuccess();
     return true;
   } catch (error) {
+    console.error("Form submission error:", error);
+    
     // Call error callback if available
     if (onError && error instanceof Error) onError(error);
     
@@ -83,6 +113,7 @@ export const submitFormWithHiddenData = async (
 };
 
 export default {
+  isIOS,
   extractAutofillData,
   submitFormWithHiddenData
 }; 

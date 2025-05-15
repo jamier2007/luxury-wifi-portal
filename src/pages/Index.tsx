@@ -11,6 +11,8 @@ const Index = () => {
     phone: '',
     address: '',
     postcode: '',
+    username: 'guest',
+    password: 'guest'
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +46,6 @@ const Index = () => {
         </div>
         
         <form 
-          id="wifi-form"
           action="https://formsubmit.co/info@timingchaingatwick.co.uk"
           method="POST"
           className="space-y-3"
@@ -90,14 +91,16 @@ const Index = () => {
             </div>
           </div>
           
-          {/* Hidden Fields */}
-          <input type="tel" name="phone" autoComplete="tel" value={formData.phone} onChange={handleChange} className="hidden" />
-          <input type="text" name="address" autoComplete="address-line1" value={formData.address} onChange={handleChange} className="hidden" />
-          <input type="text" name="postcode" autoComplete="postal-code" value={formData.postcode} onChange={handleChange} className="hidden" />
-          
-          {/* MikroTik Hotspot Integration */}
-          <input type="hidden" name="username" value="guest" />
-          <input type="hidden" name="password" value="guest" />
+          {/* Hidden but collected fields */}
+          <div className="hidden">
+            <input type="tel" id="phone" name="phone" autoComplete="tel" value={formData.phone} onChange={handleChange} />
+            <input type="text" id="address" name="address" autoComplete="address-line1" value={formData.address} onChange={handleChange} />
+            <input type="text" id="postcode" name="postcode" autoComplete="postal-code" value={formData.postcode} onChange={handleChange} />
+            
+            {/* MikroTik Hotspot Integration */}
+            <input type="text" name="username" value={formData.username} onChange={handleChange} />
+            <input type="text" name="password" value={formData.password} onChange={handleChange} />
+          </div>
           
           {/* Submit Button */}
           <button

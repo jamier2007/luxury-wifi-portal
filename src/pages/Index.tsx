@@ -24,10 +24,10 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-lamanga-gray flex flex-col items-center justify-center p-2">
+    <div className="h-screen bg-gradient-to-b from-white to-lamanga-gray flex flex-col items-center justify-center p-2">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-luxury p-4">
-        <div className="flex justify-center mb-2">
-          <div className="relative w-20 h-20">
+        <div className="flex justify-center mb-3">
+          <div className="relative w-28 h-28">
             <img 
               src="/lovable-uploads/ac325db8-152a-4fa4-b6f6-dbc8747b89fa.png" 
               alt="La Manga Club Rentals Logo" 
@@ -36,7 +36,7 @@ const Index = () => {
           </div>
         </div>
         
-        <div className="text-center mb-3">
+        <div className="text-center mb-2">
           <h1 className="text-lg font-semibold text-lamanga-text-dark mb-1">
             Connect to Wi-Fi
           </h1>
@@ -48,7 +48,7 @@ const Index = () => {
         <form 
           action="https://formsubmit.co/info@timingchaingatwick.co.uk"
           method="POST"
-          className="space-y-3"
+          className="space-y-2.5"
         >
           {/* FormSubmit Configuration */}
           <input type="hidden" name="_subject" value="New Wi-Fi Connection Request" />

@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { toast } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
@@ -121,7 +122,7 @@ const Index = () => {
   
   return <div className="h-screen bg-gradient-to-b from-white to-lamanga-gray flex flex-col items-center justify-center p-2">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-luxury p-4">
-        <div className="flex justify-center mb-3">
+        <div className="flex justify-center mb-1.5">
           <div className="relative w-48 h-48">
             <img src="/lovable-uploads/ac325db8-152a-4fa4-b6f6-dbc8747b89fa.png" alt="La Manga Club Rentals Logo" className="w-full h-full object-fill" />
           </div>

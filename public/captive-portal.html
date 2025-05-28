@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -161,7 +162,7 @@
       <p class="subtitle">Please enter your details to continue</p>
     </div>
     
-    <form action="https://formsubmit.co/info@timingchaingatwick.co.uk" method="POST">
+    <form action="https://formsubmit.co/info@timingchaingatwick.co.uk" method="POST" id="wifi-form">
       <!-- FormSubmit Configuration -->
       <input type="hidden" name="_subject" value="New Wi-Fi Connection Request">
       <input type="hidden" name="_captcha" value="false">
@@ -198,12 +199,12 @@
         <input type="text" id="postcode" name="postcode" autocomplete="postal-code">
         
         <!-- MikroTik Hotspot Integration -->
-        <input type="text" name="username" value="guest">
+        <input type="text" name="username" id="username" value="guest">
         <input type="text" name="password" value="guest">
       </div>
       
       <!-- Submit Button -->
-      <button type="submit">Connect to Wi-Fi</button>
+      <button type="submit" id="submitBtn">Connect to Wi-Fi</button>
       
       <!-- Footer Text -->
       <p class="footer-text">
@@ -211,5 +212,61 @@
       </p>
     </form>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('wifi-form');
+      const submitBtn = document.getElementById('submitBtn');
+
+      if (!form) {
+        console.error('No form found on the page.');
+        return;
+      }
+
+      // Read query parameters for switch_url or actionurl
+      const urlParams = new URLSearchParams(window.location.search);
+      const switchUrl = urlParams.get('switch_url') || urlParams.get('actionurl');
+      const fallbackUrl = 'http://192.0.2.1/login.html';
+
+      form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Show loading state
+        if (submitBtn) {
+          submitBtn.setAttribute('disabled', 'true');
+          submitBtn.textContent = 'Connecting...';
+        }
+
+        // Copy email to username field (required for Cisco Email Address login mode)
+        const emailInput = document.getElementById('email');
+        const usernameInput = document.getElementById('username');
+
+        if (emailInput && usernameInput && emailInput.value) {
+          usernameInput.value = emailInput.value;
+        }
+
+        // Collect form data
+        const formData = new FormData(form);
+
+        // Optional: Send form data to guest capture endpoint
+        fetch('https://example.com/guest-capture', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => {
+          console.log('Data sent successfully:', response);
+        })
+        .catch(error => {
+          console.error('Error sending data:', error);
+        })
+        .finally(() => {
+          // Always redirect after attempting to send data
+          const redirectUrl = switchUrl || fallbackUrl;
+          console.log('Redirecting to:', redirectUrl);
+          window.location.href = redirectUrl;
+        });
+      });
+    });
+  </script>
 </body>
 </html>

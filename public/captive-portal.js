@@ -33,22 +33,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Collect form data
     const formData = new FormData(form);
 
-    // Optional: Send form data to guest capture endpoint
-    fetch('https://example.com/guest-capture', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => {
-      console.log('Data sent successfully:', response);
-    })
-    .catch(error => {
-      console.error('Error sending data:', error);
-    })
-    .finally(() => {
-      // Always redirect after attempting to send data
-      const redirectUrl = switchUrl || fallbackUrl;
-      console.log('Redirecting to:', redirectUrl);
-      window.location.href = redirectUrl;
-    });
+    // Always redirect to the switch URL or fallback IP-based URL
+    const redirectUrl = switchUrl || fallbackUrl;
+    console.log('Redirecting to:', redirectUrl);
+    window.location.href = redirectUrl;
   });
 });

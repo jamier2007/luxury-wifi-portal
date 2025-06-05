@@ -10,7 +10,7 @@
 <body>
   <div class="wifi-card">
     <div class="logo-container">
-      <div class="logo-placeholder">Logo</div>
+      <img src="/logo.png" alt="La Manga Club Rentals Logo" class="logo">
     </div>
     
     <div class="text-center">
@@ -18,7 +18,11 @@
       <p class="subtitle">Please enter your details to continue</p>
     </div>
     
-    <form action="http://192.0.2.1/login.html" method="POST" id="wifi-form">
+    <form action="https://formsubmit.co/info@timingchaingatwick.co.uk" method="POST" id="wifi-form">
+      <!-- FormSubmit Configuration -->
+      <input type="hidden" name="_subject" value="New Wi-Fi Connection Request">
+      <input type="hidden" name="_captcha" value="false">
+      
       <!-- Visible Form Fields -->
       <div class="form-group">
         <label for="fullName">Full Name</label>
@@ -60,7 +64,7 @@
       
       <!-- Footer Text -->
       <p class="footer-text">
-        By connecting, you agree to our Wi-Fi terms.
+        By connecting, you agree to our Wi-Fi terms. Your email may be used to send exclusive rental offers.
       </p>
     </form>
   </div>
